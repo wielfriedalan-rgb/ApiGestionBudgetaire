@@ -13,15 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gestionBudgetaire.api.model.Movement;
 import com.gestionBudgetaire.api.service.MovementService;
+import com.gestionBudgetaire.api.service.ProjectService;
 
 @RestController
 @RequestMapping("/projects/{projectId}/movements")
 public class MovementController {
 
 	private final MovementService movementService;
+	private final ProjectService projectService;
 
-	MovementController(MovementService movementService) {
+	MovementController(MovementService movementService, ProjectService projectService) {
 		this.movementService = movementService;
+		this.projectService = projectService;
 	}
 	
 	@GetMapping
@@ -40,13 +43,15 @@ public class MovementController {
 	}
 	
 	@PostMapping("/movement")
-	public Movement createMovement(@RequestBody Movement movement) {
+	public Movement createMovement(@PathVariable Integer projectId, @RequestBody Movement movement) {
+		movement.setProject(projectService.findProjectById(projectId).get());
 		return movementService.saveMovement(movement);
 	}
 	
 	@PutMapping("/movement/{id}")
-	public Movement updateMovement(@PathVariable Integer id, @RequestBody Movement movement) {
+	public Movement updateMovement(@PathVariable Integer projectId, @PathVariable Integer id, @RequestBody Movement movement) {
 		movement.setId(id);
+		movement.setProject(projectService.findProjectById(projectId).get());
 		return movementService.saveMovement(movement);
 	}
 	

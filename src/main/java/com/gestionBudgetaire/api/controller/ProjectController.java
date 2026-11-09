@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gestionBudgetaire.api.DTO.FinancialSituationDTO;
 import com.gestionBudgetaire.api.model.Project;
 import com.gestionBudgetaire.api.service.ProjectService;
 
@@ -48,5 +49,10 @@ public class ProjectController {
 	@DeleteMapping("/{id}")
 	public void deleteProject(@PathVariable Integer id) {
 		projectService.deleteProject(id);
+	}
+	
+	@GetMapping("/{id}/finance")
+	public FinancialSituationDTO financialSituation(@PathVariable Integer id) {
+		return projectService.getFinancialSituation(id);
 	}
 }
