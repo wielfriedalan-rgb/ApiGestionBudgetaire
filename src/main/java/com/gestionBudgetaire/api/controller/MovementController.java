@@ -2,12 +2,12 @@ package com.gestionBudgetaire.api.controller;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,12 +18,15 @@ import com.gestionBudgetaire.api.service.MovementService;
 @RequestMapping("/projects/{projectId}/movements")
 public class MovementController {
 
-	@Autowired
-	private MovementService movementService;
+	private final MovementService movementService;
+
+	MovementController(MovementService movementService) {
+		this.movementService = movementService;
+	}
 	
 	@GetMapping
 	public Iterable<Movement> getMovementByProject(@PathVariable Integer projectId){
-		return movementService.findMovementByProject(0);
+		return movementService.findMovementByProject(projectId);
 	}
 	
 	@GetMapping("/{id}")
@@ -37,12 +40,12 @@ public class MovementController {
 	}
 	
 	@PostMapping("/movement")
-	public Movement createMovement(Movement movement) {
+	public Movement createMovement(@RequestBody Movement movement) {
 		return movementService.saveMovement(movement);
 	}
 	
 	@PutMapping("/movement/{id}")
-	public Movement updateMovement(@PathVariable Integer id, Movement movement) {
+	public Movement updateMovement(@PathVariable Integer id, @RequestBody Movement movement) {
 		movement.setId(id);
 		return movementService.saveMovement(movement);
 	}

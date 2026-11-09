@@ -2,7 +2,6 @@ package com.gestionBudgetaire.api.service;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gestionBudgetaire.api.model.Movement;
@@ -11,8 +10,11 @@ import com.gestionBudgetaire.api.repository.MovementRepository;
 @Service
 public class MovementService {
 
-	@Autowired
-	private MovementRepository movementRepository;
+	private final MovementRepository movementRepository;
+
+	MovementService(MovementRepository movementRepository) {
+		this.movementRepository = movementRepository;
+	}
 
 	public Iterable<Movement> findMovementByProject(int projectId){
 		return movementRepository.findByProjectId(projectId);

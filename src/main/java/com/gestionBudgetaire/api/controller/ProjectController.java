@@ -2,12 +2,12 @@ package com.gestionBudgetaire.api.controller;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,8 +18,11 @@ import com.gestionBudgetaire.api.service.ProjectService;
 @RequestMapping("/projects")
 public class ProjectController {
 
-	@Autowired
-	private ProjectService projectService;
+	private final ProjectService projectService;
+
+	ProjectController(ProjectService projectService) {
+		this.projectService = projectService;
+	}
 	
 	@GetMapping
 	public Iterable<Project> getAllProject(){
@@ -32,12 +35,12 @@ public class ProjectController {
 	}
 	
 	@PostMapping("/project")
-	public Project createProject(Project project) {
+	public Project createProject(@RequestBody Project project) {
 		return projectService.saveProject(project);
 	}
 	
 	@PutMapping("/project/{id}")
-	public Project updateProject(@PathVariable Integer id, Project project) {
+	public Project updateProject(@PathVariable Integer id, @RequestBody Project project) {
 		project.setId(id);
 		return projectService.saveProject(project);
 	}

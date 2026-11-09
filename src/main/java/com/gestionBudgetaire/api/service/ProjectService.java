@@ -2,7 +2,6 @@ package com.gestionBudgetaire.api.service;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gestionBudgetaire.api.model.Project;
@@ -11,8 +10,11 @@ import com.gestionBudgetaire.api.repository.ProjectRepository;
 @Service
 public class ProjectService {
 
-	@Autowired
-	private ProjectRepository projectRepository;
+	private final ProjectRepository projectRepository;
+
+	ProjectService(ProjectRepository projectRepository) {
+		this.projectRepository = projectRepository;
+	}
 	
 	public Project saveProject(Project project) {
 		return projectRepository.save(project);
