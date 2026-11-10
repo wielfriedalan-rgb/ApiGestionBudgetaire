@@ -1,6 +1,6 @@
 package com.gestionBudgetaire.api.model;
 
-import java.time.LocalDate;
+import java.time.Instant;
 
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -42,7 +42,7 @@ public class Movement {
 	private TypeMovement type;
 	
 	@Column(name="date_mouvement")
-	private LocalDate date;
+	private Instant date;
 	
 	@Column(name="description_mouvement")
 	private String description;

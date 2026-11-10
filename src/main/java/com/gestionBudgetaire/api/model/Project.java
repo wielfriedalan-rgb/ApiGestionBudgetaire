@@ -1,6 +1,6 @@
 package com.gestionBudgetaire.api.model;
 
-import java.time.LocalDate;
+import java.time.Instant;
 
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -33,10 +33,10 @@ public class Project {
 	private String description;
 	
 	@Column(name="date_debut")
-	private LocalDate startDate;
+	private Instant startDate;
 	
 	@Column(name="date_fin")
-	private LocalDate endDate;
+	private Instant endDate;
 	
 	@Enumerated(EnumType.STRING)
 	private Statut statut;
